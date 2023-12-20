@@ -1,34 +1,34 @@
-#!/usr/bin/env bash
+# Compatible with both bash and zsh
 
+# Get function definition
 flavor_definition=$(declare -f $flavor)
 original_flavor_name="original_$flavor"
 
-eval "original_$flavor_definition" 2>/dev/null
-if [ $? -ne 0 ]; then
-	eval "$flavor_definition {
-        command $flavor \"\$@\"
-    }"
-fi
+# redefine the function by replacing its name with the new name
+eval "${original_flavor_name}${flavor_definition#$flavor}"
 
-$flavor() {
-	$original_flavor_name "$@"
-	local CONDA_RTN_CODE=$?
+# redefine our function to call the original function
+eval "$flavor() {
+  $original_flavor_name \"\$@\"
+  local CONDA_RTN_CODE=\$?
+  local CONDA_DEFAULT_ENV_COPY=\$CONDA_DEFAULT_ENV
 
-	CONDA_DEFAULT_ENV_COPY=$CONDA_DEFAULT_ENV
+  # check if function execution was successful
+  if [ \$CONDA_RTN_CODE -ne 0 ]; then
+    return \$CONDA_RTN_CODE
+  fi
 
-	[ $CONDA_RTN_CODE -ne 0 ] && return $CONDA_RTN_CODE
+  if [[ \"\$@\" =~ .*\"activate\".* ]]; then
+    local TMUX_SESSION_CONDA_ENVS=\$(tmux showenv TMUX_SESSION_CONDA_ENVS 2>/dev/null)
+    if [[ $? -eq 0 ]]; then
+      local OLD_VALUES=\$(echo \$TMUX_SESSION_CONDA_ENVS | sed \"s/TMUX_SESSION_CONDA_ENVS=//\")
+      local CONDA_ENV_OTHER_PANES=\$(echo \$OLD_VALUES | sed \"s/\$TMUX_PANE:\w*[[:space:]]*//g\")
+    fi
+    tmux setenv TMUX_SESSION_CONDA_ENVS \"\$TMUX_PANE:\$CONDA_DEFAULT_ENV \$CONDA_ENV_OTHER_PANES\"
+  fi
+}"
 
-	if [[ "$@" =~ .*"activate".* ]]; then
-		local TMUX_SESSION_CONDA_ENVS=$(tmux showenv TMUX_SESSION_CONDA_ENVS 2>/dev/null)
-		if [[ $? -eq 0 ]]; then
-			local OLD_VALUES=$(echo $TMUX_SESSION_CONDA_ENVS | sed "s/TMUX_SESSION_CONDA_ENVS=//")
-			local CONDA_ENV_OTHER_PANES=$(echo $OLD_VALUES | sed "s/$TMUX_PANE:\w*[[:space:]]*//g")
-		fi
-		tmux setenv TMUX_SESSION_CONDA_ENVS "$TMUX_PANE:$CONDA_DEFAULT_ENV $CONDA_ENV_OTHER_PANES"
-	fi
-}
-
-if [[ -n "$TMUX_PARENT_PANE_ID" ]]; then
+if [[ -n \"$TMUX_PARENT_PANE_ID\" ]]; then
 	TMUX_SESSION_CONDA_ENVS=$(tmux showenv TMUX_SESSION_CONDA_ENVS 2>/dev/null)
 	if [ $? -eq 0 ]; then
 		PATT="(?<=${TMUX_PARENT_PANE_ID}:).*?(?=([[:space:]]|$))"
@@ -38,6 +38,6 @@ if [[ -n "$TMUX_PARENT_PANE_ID" ]]; then
 	unset TMUX_SESSION_CONDA_ENVS PATT PARENT_CONDA_ENV
 	unset TMUX_PARENT_PANE_ID
 else
-	[[ -n "$CONDA_DEFAULT_ENV_COPY" ]] && echo "Activate previous conda env '$CONDA_DEFAULT_ENV_COPY'"
+	[[ -n \"$CONDA_DEFAULT_ENV_COPY\" ]] && echo "Activate previous conda env '\$CONDA_DEFAULT_ENV_COPY'"
 	$flavor activate $CONDA_DEFAULT_ENV_COPY
 fi
