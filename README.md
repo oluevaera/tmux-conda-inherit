@@ -33,5 +33,5 @@ if [[ -n "$TMUX" ]] then
 fi
 ```
 
-## FUTURE
+## Future
 Working on adding support for fish
