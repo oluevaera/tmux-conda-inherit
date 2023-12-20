@@ -15,7 +15,7 @@ Add the following lines to your `tmux.config` file:
 set -g @plugin 'oluevaera/tmux-conda-inherit'
 ```
 
-Extend your current new-window and split-window keybinds with `-e "TMUX_PARENT_PANE_ID=#{pane_id}`.
+Extend your current new-window and split-window keybinds with `-e "TMUX_PARENT_PANE_ID=#{pane_id}`.  
 For example:
 ```sh
 bind '%' run 'tmux split-window -c "#{pane_current_path}" -e "TMUX_PARENT_PANE_ID=#{pane_id}" -h'
