@@ -5,7 +5,7 @@ The following dependencies are required in order to use this plugin:
 - [tmux](https://github.com/tmux/tmux) (>= 3.0)
 - [tpm](https://github.com/tmux-plugins/tpm)
 - [perl](https://github.com/Perl)
-- [bash](https://www.gnu.org/software/bash/)/[zsh](https://www.zsh.org)
+- [bash](https://www.gnu.org/software/bash/) or [zsh](https://www.zsh.org)
 
 ## Installation (via tpm)
 
