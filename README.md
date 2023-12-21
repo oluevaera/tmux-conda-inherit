@@ -4,8 +4,9 @@ The following dependencies are required in order to use this plugin:
 
 - [tmux](https://github.com/tmux/tmux) (>= 3.0)
 - [tpm](https://github.com/tmux-plugins/tpm)
-- [perl](https://github.com/Perl) (It's most likely pre-installed)
 - [bash](https://www.gnu.org/software/bash/) or [zsh](https://www.zsh.org)
+- [perl](https://github.com/Perl) (It's most likely pre-installed)
+
 
 ## Installation (via tpm)
 
