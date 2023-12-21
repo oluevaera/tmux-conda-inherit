@@ -24,15 +24,16 @@ bind '"' run 'tmux split-window -c "#{pane_current_path}" -e "TMUX_PARENT_PANE_I
 bind c run 'tmux new-window -c "#{pane_current_path}" -e "TMUX_PARENT_PANE_ID=#{pane_id}"'
 ```
 
-Add the following lines to your `.bashrc` or `.zshrc`.  
-Change the `flavor` value to the conda version you're using (anaconda, mamba, micromamba, etc.)  
-Make sure that the `source` path corresponds to your tmux plugin path.
+Add the following lines to your `.bashrc` or `.zshrc`. 
+  
 ```sh
 if [[ -n "$TMUX" ]] then
   export flavor='micromamba'
   source $HOME/.config/tmux/plugins/conda-inherit/conda-inherit.sh
 fi
 ```
+Change the `flavor` value to the conda version you're using (conda, mamba, micromamba, etc.).  
+Make sure that the `source` path corresponds to your tmux plugin path.
 
 ## Future
-Working on adding support for fish
+Working on adding support for fish.
