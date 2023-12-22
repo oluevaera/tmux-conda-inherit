@@ -1,3 +1,13 @@
+## conda inherit plugin  
+You are working on a new project, you have your conda environment set up with all your requirements, you are about to test run your changes on a new pane.  
+  
+Why is my conda environment back to "base"?! :weary:  
+  
+#### Introducing conda-inherit plugin for tmux!  
+You won't be annoyed again like that, it will always open a new tmux window or pane with the environment of your currently selected (cursor) window/pane.  
+
+Just follow the instruction bellow! :sunglasses:
+
 ## Requirements
 
 The following dependencies are required in order to use this plugin:
