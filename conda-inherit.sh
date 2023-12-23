@@ -32,7 +32,7 @@ if [[ -n \"$TMUX_PARENT_PANE_ID\" ]]; then
 	TMUX_SESSION_CONDA_ENVS=$(tmux showenv TMUX_SESSION_CONDA_ENVS 2>/dev/null)
 	if [ $? -eq 0 ]; then
 		PATT="(?<=${TMUX_PARENT_PANE_ID}:).*?(?=([[:space:]]|$))"
-		PARENT_CONDA_ENV=$(echo $TMUX_SESSION_CONDA_ENVS | $SGREP -oP "$PATT" | head -1)
+		PARENT_CONDA_ENV=$(perl -e '$ENV{"TMUX_SESSION_CONDA_ENVS"} =~ /'"$PATT"'/; print $&')
 		$flavor activate $PARENT_CONDA_ENV
 	fi
 	unset TMUX_SESSION_CONDA_ENVS PATT PARENT_CONDA_ENV
