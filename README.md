@@ -4,7 +4,7 @@ You are working on a new project, you have your conda environment set up with al
 Why is my conda environment back to "base"?! :weary:  
   
 #### Introducing conda-inherit plugin for tmux!  
-You won't be annoyed like that again, it will always open a new tmux window or pane with the environment of your currently selected (cursor) window/pane.  
+You won't be annoyed like that again, your tmux will now always open new windows and panes with the environment of your currently selected (cursor) window/pane.  
 
 Just follow the instructions bellow! :sunglasses:
 
