@@ -7,7 +7,7 @@ original_flavor_name="original_$flavor"
 # redefine the function by replacing its name with the new name
 eval "${original_flavor_name}${flavor_definition#$flavor}"
 
-# redefine our function to call the original function
+# function named with the value of $flavor
 eval "$flavor() {
   $original_flavor_name \"\$@\"
   local CONDA_RTN_CODE=\$?
@@ -28,6 +28,7 @@ eval "$flavor() {
   fi
 }"
 
+# env variable set with the split-window or new-window keybind
 if [[ -n \"$TMUX_PARENT_PANE_ID\" ]]; then
 	TMUX_SESSION_CONDA_ENVS=$(tmux showenv TMUX_SESSION_CONDA_ENVS 2>/dev/null)
 	if [ $? -eq 0 ]; then
