@@ -43,7 +43,7 @@ if [[ -n "$TMUX" ]] then
 fi
 ```
 Change the `flavor` value to the conda version you're using (conda, mamba, micromamba, etc.).  
-Make sure that the `source` path corresponds to your tmux plugin path.
+Make sure that the `source` path corresponds to the conda-inherit plugin path.
 
 ## Future
 Working on adding support for fish.
