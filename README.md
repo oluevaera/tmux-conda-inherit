@@ -6,7 +6,7 @@ Why is my conda environment back to "base"?! :weary:
 #### Introducing the conda-inherit plugin for tmux!  
 You won't be annoyed like that again, your tmux will now always open new windows and panes with the environment of your currently selected (cursor) window/pane.  
 
-To insstall, just follow the instructions below! :sunglasses:
+To install, just follow the instructions below! :sunglasses:
 
 ## Requirements
 
